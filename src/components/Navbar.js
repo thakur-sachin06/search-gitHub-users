@@ -1,9 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
+import { GithubContext } from "../context/context";
 
 const Navbar = () => {
-  return <h2>navbar component</h2>;
+  const value = useContext(GithubContext);
+  return (
+    <Wrapper>
+      <div>
+        <h1>Hello</h1>
+        <Link to="/login">LOGIN</Link>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.nav`
