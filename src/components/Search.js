@@ -1,9 +1,42 @@
-import React from 'react';
-import styled from 'styled-components';
-import { MdSearch } from 'react-icons/md';
-import { GithubContext } from '../context/context';
+import React from "react";
+import styled from "styled-components";
+import { MdSearch } from "react-icons/md";
+import { GithubContext } from "../context/context";
+
 const Search = () => {
-  return <h2>search component</h2>;
+  const [user, setUser] = React.useState("");
+  const { requests, errors, searchGitHubUser } = React.useContext(
+    GithubContext
+  );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (user) {
+      searchGitHubUser(user);
+    }
+  };
+  return (
+    <section className="section">
+      <Wrapper className="section-center">
+        {errors.show && (
+          <ErrorWrapper>
+            <p>{errors.msg}</p>
+          </ErrorWrapper>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="form-control">
+            <MdSearch />
+            <input
+              type="text"
+              placeholder="Search user"
+              onChange={(e) => setUser(e.target.value)}
+            />
+            {requests > 0 && <button>Search</button>}
+          </div>
+        </form>
+        <h3>requests:{requests}/60</h3>
+      </Wrapper>
+    </section>
+  );
 };
 
 const Wrapper = styled.div`
@@ -47,9 +80,16 @@ const Wrapper = styled.div`
       color: var(--clr-white);
       transition: var(--transition);
       cursor: pointer;
+
       &:hover {
         background: var(--clr-primary-8);
         color: var(--clr-primary-1);
+      }
+      &:active {
+        transform: scale(0.9);
+      }
+      &:focus {
+        outline: none;
       }
     }
 
@@ -85,6 +125,8 @@ const ErrorWrapper = styled.article`
   p {
     color: red;
     letter-spacing: var(--spacing);
+    font-weight: 600;
+    font-size: 18px;
   }
 `;
 export default Search;

@@ -1,10 +1,41 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
-import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
+import React, { useContext } from "react";
+import { GithubContext } from "../context/context";
+import styled from "styled-components";
+import { MdBusiness, MdLocationOn, MdLink } from "react-icons/md";
+
 const Card = () => {
-  return <h2>card component</h2>;
+  const { githubUser } = useContext(GithubContext);
+  const {
+    avatar_url,
+    html_url,
+    name,
+    company,
+    blog,
+    bio,
+    location,
+    twitter_username,
+  } = githubUser;
+  return (
+    <Wrapper>
+      <header>
+        <img src={avatar_url} alt={name} />
+        <div>
+          <h4>{name}</h4>
+          <p>@{twitter_username || "Not on Twitter"}</p>
+        </div>
+        <a href={html_url} target="_blank">
+          GitHub Link
+        </a>
+      </header>
+      <p className="bio">{bio}</p>
+      <StyledDiv>
+        <MdLocationOn className="icon" />
+        <StyledText>{location}</StyledText>
+      </StyledDiv>
+    </Wrapper>
+  );
 };
+
 const Wrapper = styled.article`
   background: var(--clr-white);
   padding: 1.5rem 2rem;
@@ -13,7 +44,7 @@ const Wrapper = styled.article`
   border-bottom-right-radius: var(--radius);
   position: relative;
   &::before {
-    content: 'user';
+    content: "user";
     position: absolute;
     top: 0;
     left: 0;
@@ -84,5 +115,15 @@ const Wrapper = styled.article`
       }
     }
   }
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledText = styled.p`
+  margin-bottom: 0 !important;
+  margin-left: 3px;
 `;
 export default Card;
