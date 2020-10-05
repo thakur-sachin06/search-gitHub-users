@@ -8,10 +8,7 @@ const Navbar = () => {
   const value = useContext(GithubContext);
   return (
     <Wrapper>
-      <div>
-        <h1>Hello</h1>
-        <Link to="/login">LOGIN</Link>
-      </div>
+      <h5>navbar</h5>
     </Wrapper>
   );
 };

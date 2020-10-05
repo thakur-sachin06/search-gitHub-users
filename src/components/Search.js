@@ -5,7 +5,7 @@ import { GithubContext } from "../context/context";
 
 const Search = () => {
   const [user, setUser] = React.useState("");
-  const { requests, errors, searchGitHubUser } = React.useContext(
+  const { requests, errors, searchGitHubUser, isLoading } = React.useContext(
     GithubContext
   );
   const handleSubmit = (e) => {
@@ -30,7 +30,7 @@ const Search = () => {
               placeholder="Search user"
               onChange={(e) => setUser(e.target.value)}
             />
-            {requests > 0 && <button>Search</button>}
+            {requests > 0 && !isLoading && <button>Search</button>}
           </div>
         </form>
         <h3>requests:{requests}/60</h3>
@@ -82,7 +82,7 @@ const Wrapper = styled.div`
       cursor: pointer;
 
       &:hover {
-        background: var(--clr-primary-8);
+        background: var(--clr-primary-5);
         color: var(--clr-primary-1);
       }
       &:active {

@@ -32,7 +32,7 @@ const Wrapper = styled.article`
   position: relative;
 
   &::before {
-    content: " followers";
+    content: "followers";
     position: absolute;
     top: 0;
     left: 0;
@@ -74,6 +74,7 @@ const Wrapper = styled.article`
     a {
       color: var(--clr-grey-5);
       display: inline-block;
+      transition: all 0.2s;
       &:hover {
         color: var(--clr-primary-5);
         transform: scale(1.1);

@@ -13,7 +13,7 @@ const GithubProvider = ({ children }) => {
   const [followers, setFollowers] = useState(mockFollowers);
   const [requests, setRequests] = useState(0);
   const [errors, setErrors] = useState({ show: false, msg: "" });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -31,15 +31,31 @@ const GithubProvider = ({ children }) => {
   });
 
   const searchGitHubUser = async (user) => {
+    setIsLoading(true);
     const response = await axios
       .get(`${rootUrl}/users/${user}`)
       .catch((err) => console.log(err));
     if (response) {
       setGithubUser(response.data);
+      const { login, followers_url } = response.data;
+
+      await Promise.allSettled([
+        axios.get(`${rootUrl}/users/${login}/repos?per_page=100`),
+        axios.get(`${followers_url}?per_page=100`),
+      ])
+        .then((result) => {
+          const [repos, followers] = result;
+          if (repos.status === "fulfilled") setRepos(repos.value.data);
+          if (followers.status === "fulfilled")
+            setFollowers(followers.value.data);
+        })
+        .catch((err) => console.log(err));
+
       setErrors({ show: false, msg: "" });
     } else {
       toggleError(true, `There is no user with username ${user}`);
     }
+    setIsLoading(false);
   };
 
   function toggleError(show, msg) {
@@ -55,6 +71,7 @@ const GithubProvider = ({ children }) => {
         requests,
         errors,
         searchGitHubUser,
+        isLoading,
       }}
     >
       {children}

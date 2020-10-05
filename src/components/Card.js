@@ -24,13 +24,24 @@ const Card = () => {
           <p>@{twitter_username || "Not on Twitter"}</p>
         </div>
         <a href={html_url} target="_blank">
-          GitHub Link
+          Follow
         </a>
       </header>
       <p className="bio">{bio}</p>
+
       <StyledDiv>
         <MdLocationOn className="icon" />
-        <StyledText>{location}</StyledText>
+        <StyledText>{location || "No Location"}</StyledText>
+      </StyledDiv>
+
+      <StyledDiv>
+        <MdBusiness className="icon" />
+        <StyledText>{company || "No company"}</StyledText>
+      </StyledDiv>
+
+      <StyledDiv>
+        <MdLink className="icon" />
+        <StyledLink href={`https://${blog}`}>{blog}</StyledLink>
       </StyledDiv>
     </Wrapper>
   );
@@ -120,10 +131,21 @@ const Wrapper = styled.article`
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 5px;
 `;
 
 const StyledText = styled.p`
   margin-bottom: 0 !important;
-  margin-left: 3px;
+  margin-left: 8px;
+`;
+
+const StyledLink = styled.a`
+  color: var(--clr-primary-5);
+  margin-left: 8px;
+  transition: all 0.2s;
+  :hover {
+    color: var(--clr-primary-4);
+    transform: scale(1.08);
+  }
 `;
 export default Card;
