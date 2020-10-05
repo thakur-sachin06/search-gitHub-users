@@ -2,7 +2,6 @@ import React from "react";
 import { CircularProgress } from "@rmwc/circular-progress";
 import styled from "styled-components";
 import "@rmwc/circular-progress/circular-progress.css";
-import { GithubContext } from "../../context/context";
 
 function Spinner() {
   return (

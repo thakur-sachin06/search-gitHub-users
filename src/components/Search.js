@@ -8,6 +8,14 @@ const Search = () => {
   const { requests, errors, searchGitHubUser, isLoading } = React.useContext(
     GithubContext
   );
+
+  const isButtonDisabled = () => {
+    if (user === "") {
+      return <button disabled>Search</button>;
+    }
+    return <button>Search</button>;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user) {
@@ -30,7 +38,7 @@ const Search = () => {
               placeholder="Search user"
               onChange={(e) => setUser(e.target.value)}
             />
-            {requests > 0 && !isLoading && <button>Search</button>}
+            {requests > 0 && !isLoading && isButtonDisabled()}
           </div>
         </form>
         <h3>requests:{requests}/60</h3>
@@ -81,7 +89,7 @@ const Wrapper = styled.div`
       transition: var(--transition);
       cursor: pointer;
 
-      &:hover {
+      &:hover:enabled {
         background: var(--clr-primary-5);
         color: var(--clr-primary-1);
       }
@@ -90,6 +98,11 @@ const Wrapper = styled.div`
       }
       &:focus {
         outline: none;
+      }
+
+      &:disabled {
+        background-color: #dddddd;
+        cursor: not-allowed;
       }
     }
 

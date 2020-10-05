@@ -23,9 +23,7 @@ const Card = () => {
           <h4>{name}</h4>
           <p>@{twitter_username || "Not on Twitter"}</p>
         </div>
-        <a href={html_url} target="_blank">
-          Follow
-        </a>
+        <a href={html_url}>Follow</a>
       </header>
       <p className="bio">{bio}</p>
 
